@@ -1,4 +1,3 @@
-# ProjetoCloudUP2019
 
 1º Passo: Caso a base de dados ProjetoCloud exista, delete ela para começar do zero. Este passo é muito importante.
 
