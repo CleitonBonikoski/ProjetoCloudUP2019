@@ -13,7 +13,7 @@ using Dispositivo = DAL.Entidades.Dispositivo;
 
 namespace ProjetoCloud.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class DispositivosController : Controller
     {
         private readonly CloudContexto _context;

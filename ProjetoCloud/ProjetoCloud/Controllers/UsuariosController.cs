@@ -13,7 +13,7 @@ using ProjetoCloud.Areas.Identity.Data;
 
 namespace ProjetoCloud.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class UsuariosController : Controller
     {
         private readonly CloudContexto _context;

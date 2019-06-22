@@ -1,4 +1,9 @@
-﻿@model IEnumerable<DAL.Entidades.Dispositivo>
+﻿@using Microsoft.AspNetCore.Identity
+@using ProjetoCloud.Areas.Identity.Data
+@inject SignInManager<ProjetoCloudUser> SignInManager
+@inject UserManager<ProjetoCloudUser> UserManager
+
+@model IEnumerable<DAL.Entidades.Dispositivo>
 
 @{
     ViewData["Title"] = "Dispositivos";
@@ -35,11 +40,14 @@
                 <td class="text-center">
                     @Html.DisplayFor(modelItem => item.Status_Dispositivo)
                 </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id_Dispositivo">Editar</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id_Dispositivo">Detalhes</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id_Dispositivo">Apagar</a>
-                </td>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id_Dispositivo">Editar</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id_Dispositivo">Detalhes</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id_Dispositivo">Apagar</a>
+                    </td>
+                }
             </tr>
         }
     </tbody>

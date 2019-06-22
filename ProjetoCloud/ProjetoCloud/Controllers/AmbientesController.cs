@@ -12,7 +12,7 @@ using ProjetoCloud.Models;
 
 namespace ProjetoCloud.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class AmbientesController : Controller
     {
         private readonly CloudContexto _context;

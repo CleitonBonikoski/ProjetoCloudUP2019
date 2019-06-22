@@ -13,22 +13,22 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome_Usuario)
+            <th class="text-center">
+                @Html.DisplayName("Nome Usuário")
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Data_Cadastro_Usuario)
+            <th class="text-center">
+                @Html.DisplayName("Data Cadastro")
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CPF_Usuario)
+            <th class="text-center">
+                @Html.DisplayName("CPF")
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cartao_Usuario)
+            <th class="text-center">
+                @Html.DisplayName("Cartão Crédito")
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CEP_Usuario)
+            <th class="text-center">
+                @Html.DisplayName("CEP")
             </th>
-            <th>
+            <th class="text-center">
                 Administrador
             </th>
             <th></th>
@@ -38,22 +38,22 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
+                <td class="text-center">
                     @Html.DisplayFor(modelItem => item.Nome_Usuario)
                 </td>
-                <td>
+                <td class="text-center">
                     @Html.DisplayFor(modelItem => item.Data_Cadastro_Usuario)
                 </td>
-                <td>
+                <td class="text-center">
                     @Html.DisplayFor(modelItem => item.CPF_Usuario)
                 </td>
-                <td>
+                <td class="text-center">
                     @Html.DisplayFor(modelItem => item.Cartao_Usuario)
                 </td>
-                <td>
+                <td class="text-center">
                     @Html.DisplayFor(modelItem => item.CEP_Usuario)
                 </td>
-                <td>
+                <td class="text-center">
                     @{
                         var texto = "";
 
@@ -82,9 +82,9 @@
                     }
                     </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id_Usuario">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id_Usuario">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id_Usuario">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id_Usuario">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id_Usuario">Detalhes</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id_Usuario">Apagar</a>
                 </td>
             </tr>
         }
