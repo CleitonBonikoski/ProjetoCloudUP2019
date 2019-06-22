@@ -58,13 +58,25 @@ namespace ProjetoCloud.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id_Dispositivo,Nome_Dispositivo,Status_Dispositivo")] Dispositivo dispositivo)
+        public async Task<IActionResult> Create(string nome_ambiente, [Bind("Id_Dispositivo,Nome_Dispositivo,Status_Dispositivo")] Dispositivo dispositivo)
         {
             if (ModelState.IsValid)
             {
+                Ambiente ambiente = _context.Ambientes.Where(_ => _.Nome_Ambiente.Equals(nome_ambiente)).FirstOrDefault();
+
+                //Cadastrando Dispositivo.
                 dispositivo.Data_Cadastro_Dispositivo = DateTime.Now;
+                dispositivo.Ambiente = ambiente;
                 _context.Add(dispositivo);
                 await _context.SaveChangesAsync();
+                
+                //Atualizando quantidade dispositivos no ambiente.
+                ambiente.Qtda_Dispositivo_Ambiente++;
+                ambiente.Dispositivos_Ambiente.Add(dispositivo);
+                _context.Update(ambiente);
+                _context.SaveChanges();
+
+
                 return RedirectToAction(nameof(Index));
             }
             return View(dispositivo);
