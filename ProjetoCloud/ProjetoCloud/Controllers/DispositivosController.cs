@@ -69,13 +69,16 @@ namespace ProjetoCloud.Controllers
                 dispositivo.Ambiente = ambiente;
                 _context.Add(dispositivo);
                 await _context.SaveChangesAsync();
-                
-                //Atualizando quantidade dispositivos no ambiente.
-                ambiente.Qtda_Dispositivo_Ambiente++;
-                ambiente.Dispositivos_Ambiente.Add(dispositivo);
-                _context.Update(ambiente);
-                _context.SaveChanges();
 
+                if (ambiente != null)
+                {
+                    //Atualizando quantidade dispositivos no ambiente.
+                    ambiente.Qtda_Dispositivo_Ambiente++;
+                    ambiente.Dispositivos_Ambiente.Add(dispositivo);
+                    _context.Update(ambiente);
+                    _context.SaveChanges();
+
+                }
 
                 return RedirectToAction(nameof(Index));
             }
@@ -157,9 +160,22 @@ namespace ProjetoCloud.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var dispositivo = await _context.Dispositivos.FindAsync(id);
+            Dispositivo dispositivo = _context.Dispositivos.Where(_ => _.Id_Dispositivo == id).Include(_ => _.Ambiente).FirstOrDefault();
+
+            Ambiente ambiente = dispositivo.Ambiente;
+
+            if (ambiente != null)
+            {
+                // Remove a Quantidade de dispositivos no ambiente.
+                ambiente.Qtda_Dispositivo_Ambiente--;
+                _context.Ambientes.Update(ambiente);
+                _context.SaveChanges();
+            }
+
+            // Remove dispositivo.
             _context.Dispositivos.Remove(dispositivo);
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 

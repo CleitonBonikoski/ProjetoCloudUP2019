@@ -12,6 +12,7 @@ using ProjetoCloud.Models;
 
 namespace ProjetoCloud.Controllers
 {
+
     [Authorize]
     public class AmbientesController : Controller
     {
@@ -62,7 +63,7 @@ namespace ProjetoCloud.Controllers
             if (ModelState.IsValid)
             {
                 ambiente.Data_Cadastro_Ambiente = DateTime.Now;
-                ambiente.Qtda_Dispositivo_Ambiente = 0 ;
+                ambiente.Qtda_Dispositivo_Ambiente = 0;
 
                 _context.Add(ambiente);
                 await _context.SaveChangesAsync();
@@ -147,8 +148,27 @@ namespace ProjetoCloud.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var ambiente = await _context.Ambientes.FindAsync(id);
-            _context.Ambientes.Remove(ambiente);
-            await _context.SaveChangesAsync();
+            int id_ambiente = ambiente.Id_Ambiente;
+
+            if (ambiente.Qtda_Dispositivo_Ambiente < 1)
+            {
+                _context.Ambientes.Remove(ambiente);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                List<Dispositivo> dispositivos = _context.Dispositivos.Where(_ => _.Ambiente.Id_Ambiente == id_ambiente).ToList();
+
+                foreach (var item in dispositivos)
+                {
+                    _context.Dispositivos.Remove(item);
+                    await _context.SaveChangesAsync();
+                }
+                
+                _context.Ambientes.Remove(ambiente);
+                await _context.SaveChangesAsync();
+            }
+
             return RedirectToAction(nameof(Index));
         }
 
