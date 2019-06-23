@@ -64,6 +64,16 @@ namespace ProjetoCloud.Controllers
             {
                 Ambiente ambiente = _context.Ambientes.Where(_ => _.Nome_Ambiente.Equals(nome_ambiente)).FirstOrDefault();
 
+                if (ambiente == null)
+                {
+                    ambiente = new Ambiente();
+                    ambiente.Nome_Ambiente = nome_ambiente;
+                    ambiente.Qtda_Dispositivo_Ambiente = 0;
+                    ambiente.Data_Cadastro_Ambiente = DateTime.UtcNow;
+                    _context.Add(ambiente);
+                    _context.SaveChanges();
+                }
+
                 //Cadastrando Dispositivo.
                 dispositivo.Data_Cadastro_Dispositivo = DateTime.Now;
                 dispositivo.Ambiente = ambiente;
