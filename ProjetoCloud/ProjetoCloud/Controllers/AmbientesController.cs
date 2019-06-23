@@ -62,9 +62,21 @@ namespace ProjetoCloud.Controllers
         {
             if (ModelState.IsValid)
             {
-                ambiente.Data_Cadastro_Ambiente = DateTime.Now;
-                ambiente.Qtda_Dispositivo_Ambiente = 0;
+                var nome_ambiente = "";
+                var cont = 0;
 
+                nome_ambiente = ambiente.Nome_Ambiente;
+
+                List<Dispositivo> dispositivos = _context.Dispositivos.Where(_ => _.Ambiente.Nome_Ambiente.Equals(nome_ambiente)).ToList();
+
+                foreach (var item in dispositivos)
+                {
+                    cont++;
+                }
+
+                ambiente.Qtda_Dispositivo_Ambiente = cont;
+                ambiente.Data_Cadastro_Ambiente = DateTime.Now;
+                
                 _context.Add(ambiente);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
